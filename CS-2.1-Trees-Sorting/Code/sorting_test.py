@@ -3,7 +3,7 @@
 from sorting import random_ints
 from sorting_iterative import is_sorted, bubble_sort, selection_sort, insertion_sort
 
-sort = insertion_sort
+sort = selection_sort
 
 def test_is_sorted_on_sorted_integers():
     # Positive test cases (examples) with lists of sorted integers

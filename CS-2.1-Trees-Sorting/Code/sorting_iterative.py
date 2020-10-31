@@ -14,7 +14,7 @@ def is_sorted(test_list):
             flag = 1
         i += 1
         
-    print(flag)
+    # print(flag)
     if (not flag): 
         return True
     return False
@@ -24,26 +24,18 @@ def is_sorted(test_list):
 def bubble_sort(items):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
+    TODO: Running time: O(n^2) Worst case because the loop will run for n items, and this will occur as many times as the n items. 
     TODO: Memory usage: ??? Why and under what conditions?"""
     # TODO: Repeat until all items are in sorted order
     # TODO: Swap adjacent items that are out of order
 
-    n = len(items)
+    while not is_sorted(items):
+        for i in range(len(items)-1):
+            if items[i] > items[i+1]:
+                items[i], items[i+1] = items[i+1], items[i]
 
-    for i in range(n - 1) :
-        flag = 0
-
-        for j in range(n - 1) :
-            
-            if items[j] > items[j + 1] : 
-                tmp = items[j]
-                items[j] = items[j + 1]
-                items[j + 1] = tmp
-                flag = 1
-
-        if flag == 0:
-            break
+    # print("Bubble:")
+    # print(items)
     return 
 
 def selection_sort(items):
@@ -54,20 +46,29 @@ def selection_sort(items):
     # TODO: Repeat until all items are in sorted order
     # TODO: Find minimum item in unsorted items
     # TODO: Swap it with first unsorted item
-    for item in range(len(items)):
-        num = 0
-        num_index = None
-        for item2 in range(len(items)):
-            if item2 > num:
-                num = item
-                num_index = items[item2]
 
-        items[item] = num 
-        items[num_index] = item
-    
-    print(items)
+    while not is_sorted(items):
+        i = 1
+
+        for ind, item in enumerate(items):
+            # print(items)
+            new_min = ind
+            for j, item2 in enumerate(items[i:]):
+                # print(items[i:])
+                if item2 < item:
+                    new_min = j+i
+                    # print("item:", item, " min val:", item2)
+            i += 1
+            # print(i)
+
+            # print("new_min at index: ", new_min)
+            # print(items[ind], items[new_min])
+            items[ind], items[new_min] = items[new_min], items[ind]
+
+    # print(items)
     return items
 
+    
 
 def insertion_sort(items):
     """Sort given items by taking first unsorted item, inserting it in sorted
@@ -93,7 +94,10 @@ if __name__ == "__main__":
     ascend = ([0, 2, 4, 5])
     descend = ([9, 3, 2, 1, 1])
 
-    # bubble_sort(nums)
+    selection_sort(nums)
+    # selection_sort(ascend)
+    # selection_sort(descend)
+
 
 
    
