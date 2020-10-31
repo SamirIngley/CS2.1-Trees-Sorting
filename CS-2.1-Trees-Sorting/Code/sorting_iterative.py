@@ -38,11 +38,10 @@ def bubble_sort(items):
 def selection_sort(items):
     """Sort given items by finding minimum item, swapping it with first
     unsorted item, and repeating until all items are in sorted order.
-    Running time: O(n) goes through the list, finds the smallest number and puts it in the beginning every time - that's very efficient. We only loop through the array 1 time in theory. 
+    Running time: O(n^2) We have to find the smallest item every time to compare. So that's n * n. goes through the list, finds the smallest number and puts it in the beginning every time - that's very efficient. We only loop through the array 1 time in theory. 
     Memory: None - we don't need any new memory, we simple rearrange/swap values. 
     """
     
-
     while not is_sorted(items):
         i = 1
 
@@ -70,27 +69,31 @@ def insertion_sort(items):
     """Sort given items by taking first unsorted item, inserting it in sorted
     order in front of items, and repeating until all items are in order.
     TODO: Running time: O(n^2) For each n we search through another set of n values. Worst case because we decrease the amount of unsorted values each time we progress thus getting faster. We have to loop through each number, then loop through the sorted list. 
-    TODO: Memory usage: Why and under what conditions?"""
+    TODO: Memory usage: None """
     
-    for i in range(len(items)-1):
-        j = i
-        while j > 0 and items[j-1] > items[j]:
-            items[j], items[j-1] = items[j-1], items[j]
-            j = j-1
+    for index in range(1, len(items)):
+        currVal = items[index]
+        currPos = index 
 
-    print(items)
+        while currPos > 0 and items[currPos -1] > currVal:
+            items[currPos] = items[currPos -1]
+            currPos = currPos -1 
+        
+        items[currPos] = currVal
+
+    # print(items)
     return items
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     
-    nums = ([3, 2, 8, 5, 4, 3, 1])
-    ascend = ([0, 2, 4, 5])
-    descend = ([9, 3, 2, 1, 1])
+#     nums = ([3, 2, 8, 5, 4, 3, 1])
+#     ascend = ([0, 2, 4, 5])
+#     descend = ([9, 3, 2, 1, 1])
 
-    insertion_sort(nums)
-    insertion_sort(ascend)
-    insertion_sort(descend)
+#     insertion_sort(nums)
+#     insertion_sort(ascend)
+#     insertion_sort(descend)
 
 
 
