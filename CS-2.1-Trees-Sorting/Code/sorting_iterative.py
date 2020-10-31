@@ -24,28 +24,24 @@ def is_sorted(test_list):
 def bubble_sort(items):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
-    TODO: Running time: O(n^2) Worst case because the loop will run for n items, and this will occur as many times as the n items. 
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Swap adjacent items that are out of order
+    Running time: O(n^2) This alg can only bring one item from one end to the other at a time. We need to make this loop n times worst case for every item
+    Memory usage: Almost none because we're not creating any new values just rearranging them"""
 
     while not is_sorted(items):
         for i in range(len(items)-1):
             if items[i] > items[i+1]:
                 items[i], items[i+1] = items[i+1], items[i]
 
-    # print("Bubble:")
     # print(items)
     return 
 
 def selection_sort(items):
     """Sort given items by finding minimum item, swapping it with first
     unsorted item, and repeating until all items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Find minimum item in unsorted items
-    # TODO: Swap it with first unsorted item
+    Running time: O(n) goes through the list, finds the smallest number and puts it in the beginning every time - that's very efficient. We only loop through the array 1 time in theory. 
+    Memory: None - we don't need any new memory, we simple rearrange/swap values. 
+    """
+    
 
     while not is_sorted(items):
         i = 1
@@ -73,11 +69,9 @@ def selection_sort(items):
 def insertion_sort(items):
     """Sort given items by taking first unsorted item, inserting it in sorted
     order in front of items, and repeating until all items are in order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Take first unsorted item
-    # TODO: Insert it in sorted order in front of items
+    TODO: Running time: O(n^2) For each n we search through another set of n values. Worst case because we decrease the amount of unsorted values each time we progress thus getting faster. We have to loop through each number, then loop through the sorted list. 
+    TODO: Memory usage: Why and under what conditions?"""
+    
     for i in range(len(items)-1):
         j = i
         while j > 0 and items[j-1] > items[j]:
@@ -94,9 +88,9 @@ if __name__ == "__main__":
     ascend = ([0, 2, 4, 5])
     descend = ([9, 3, 2, 1, 1])
 
-    selection_sort(nums)
-    # selection_sort(ascend)
-    # selection_sort(descend)
+    insertion_sort(nums)
+    insertion_sort(ascend)
+    insertion_sort(descend)
 
 
 
