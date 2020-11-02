@@ -1,23 +1,23 @@
 #!python
 
 
-def is_sorted(test_list):
+def is_sorted(a_list):
     """Return a boolean indicating whether given items are in sorted order.
     Running time: O(n) bc we do a comparison for n items in the list
-    Memory usage: """
+    Memory usage: None, no memory created """
     # Check that all adjacent items are in order, return early if so
 
-    flag = 0
-    i = 1
-    while i < len(test_list): 
-        if(test_list[i] < test_list[i - 1]): 
-            flag = 1
-        i += 1
-        
-    # print(flag)
-    if (not flag): 
-        return True
-    return False
+    if len(a_list) == 1 or len(a_list) == 0:
+        return True 
+    else:
+        previous = a_list[0]
+
+        for item in a_list:
+            if item < previous:
+                return False
+            previous = item
+
+    return True
 
 
 
@@ -27,9 +27,13 @@ def bubble_sort(items):
     Running time: O(n^2) This alg can only bring one item from one end to the other at a time. We need to make this loop n times worst case for every item
     Memory usage: Almost none because we're not creating any new values just rearranging them"""
 
+    # check if it items are sorted after each iteration 
     while not is_sorted(items):
-        for i in range(len(items)-1):
-            if items[i] > items[i+1]:
+
+        # I chose to iterate via index of each item
+        for i in range(len(a_list)-1):
+            if items[i+1] < items[i]:
+                #swap
                 items[i], items[i+1] = items[i+1], items[i]
 
     # print(items)
@@ -38,26 +42,25 @@ def bubble_sort(items):
 def selection_sort(items):
     """Sort given items by finding minimum item, swapping it with first
     unsorted item, and repeating until all items are in sorted order.
-    Running time: O(n^2) We have to find the smallest item every time to compare. So that's n * n. goes through the list, finds the smallest number and puts it in the beginning every time - that's very efficient. We only loop through the array 1 time in theory. 
+    Running time: O(n^2) We have to find the smallest item every time to compare. So that's n * n. 
     Memory: None - we don't need any new memory, we simple rearrange/swap values. 
     """
     
     while not is_sorted(items):
         i = 1
 
+        # two loops: one to loop through each place in the items, the other to find the minimum element each time. 
         for ind, item in enumerate(items):
-            # print(items)
             new_min = ind
+            # find the minimum value in the list of items
             for j, item2 in enumerate(items[i:]):
-                # print(items[i:])
+
+                # the index is from the beginning of the list of items, not from where the loop began
                 if item2 < item:
                     new_min = j+i
-                    # print("item:", item, " min val:", item2)
             i += 1
-            # print(i)
 
-            # print("new_min at index: ", new_min)
-            # print(items[ind], items[new_min])
+            # swap the new min with the current index of the outer loop
             items[ind], items[new_min] = items[new_min], items[ind]
 
     # print(items)
@@ -81,20 +84,16 @@ def insertion_sort(items):
         
         items[currPos] = currVal
 
-    # print(items)
+    print(items)
     return items
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
     
-#     nums = ([3, 2, 8, 5, 4, 3, 1])
-#     ascend = ([0, 2, 4, 5])
-#     descend = ([9, 3, 2, 1, 1])
+    nums = ([3, 2, 8, 5, 4, 3, 1])
+    ascend = ([0, 2, 4, 5])
+    descend = ([9, 3, 2, 1, 1])
 
-#     insertion_sort(nums)
-#     insertion_sort(ascend)
-#     insertion_sort(descend)
-
-
-
-   
+    insertion_sort(nums)
+    insertion_sort(ascend)
+    insertion_sort(descend)
