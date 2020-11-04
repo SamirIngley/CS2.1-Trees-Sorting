@@ -3,14 +3,17 @@
 
 # base case: when list length is 1 (already sorted)
 
+# https://stackabuse.com/merge-sort-in-python/
 
 def merge_sort(array):
 
     if len(array) == 1: # a list of 1 is already sorted
+        print('array' + array)
         return array 
     
     # recursive case
-    middle = len(array) // 2
+    middle = (len(array)) // 2
+    print('middle ', middle)
 
     # give me left chunk and right chunk
     left = array[0:middle+1]
@@ -30,17 +33,26 @@ def merge(left, right):
     lindex = 0
     rindex = 0
 
-    if len(left) > len(right):
+    if len(left) >= len(right):
         longer = len(left)
     else:
         longer = len(right)
 
-    for item in range(longer):
+    # loop through the longer string
+    for item in range(len(longer)-1):
         if left[lindex] == right[rindex]: 
-            merged += left[lindex]
-            merged += right[rindex]
+            merged.append(left[lindex])
+            merged.append(right[rindex])
+        # if the left index is greater than right, append it
         elif left[lindex] > right[rindex]:
-            merged += 
+            merged.append(left[lindex])
+        else:
+            merged.append(right[rindex])
+
+    print(merged)
+    return merged 
 
 if __name__ == "__main__":
+
     merge_sort([8, 1, 9, 14, 23])
+
