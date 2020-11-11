@@ -1,16 +1,37 @@
 #!python
 
-
 def counting_sort(numbers):
     """Sort given numbers (integers) by counting occurrences of each number,
     then looping over counts and copying that many numbers into output list.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # TODO: Find range of given numbers (minimum and maximum integer values)
+    upper = max(numbers)
+    lower = min(numbers)
+      
     # TODO: Create list of counts with a slot for each number in input range
+    counts = {}
+    for count in range(lower, upper+1):
+      counts[count] = 0 
+
     # TODO: Loop over given numbers and increment each number's count
+    for item in numbers:
+      counts[item] += 1
+
     # TODO: Loop over counts and append that many numbers into output list
-    # FIXME: Improve this to mutate input instead of creating new output list
+    output_list = []
+    for key, value in counts.items():
+      for item in range(value):
+        output_list.append(key)
+
+    print('Output List: ', output_list)
+    # Stretch: Improve this to mutate input instead of creating new output list
+    # for index in range(len(numbers)-1):
+
+    #   for key, value in counts.items():
+    #   numbers[index] = 
+
+    #TODO: Write some test cases
 
 
 def bucket_sort(numbers, num_buckets=10):
