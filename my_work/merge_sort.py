@@ -5,54 +5,36 @@
 
 # https://stackabuse.com/merge-sort-in-python/
 
-def merge_sort(array):
+import sys
 
-    if len(array) == 1: # a list of 1 is already sorted
-        print('array' + array)
-        return array 
-    
-    # recursive case
-    middle = (len(array)) // 2
-    print('middle ', middle)
+def merge_sort(A):
+	merge_sort2(A, 0, len(A)-1)
+	
+def merge_sort2(A, first, last):
+	if first < last:
+		middle = (first + last)//2
+		merge_sort2(A, first, middle)
+		merge_sort2(A, middle+1, last)
+		return merge(A, first, middle, last)
+		
+def merge(A, first, middle, last):
+	L = A[first:middle+1]
+	R = A[middle+1:last+1]
+	L.append(sys.maxsize)
+	R.append(sys.maxsize)
+	i = j = 0
+	
+	for k in range (first, last+1):
+		if L[i] <= R[j]:
+			A[k] = L[i]
+			i += 1
+		else:
+			A[k] = R[j]
+			j += 1
 
-    # give me left chunk and right chunk
-    left = array[0:middle+1]
-    right = array[middle+1:]
-    print(left)
-    print(right)
-    input()
 
-    result_left = merge_sort(left)
-    result_right = merge_sort(right)
-
-    return merge(result_left, result_right)
-
-def merge(left, right):
-
-    merged = []
-    lindex = 0
-    rindex = 0
-
-    if len(left) >= len(right):
-        longer = len(left)
-    else:
-        longer = len(right)
-
-    # loop through the longer string
-    for item in range(len(longer)-1):
-        if left[lindex] == right[rindex]: 
-            merged.append(left[lindex])
-            merged.append(right[rindex])
-        # if the left index is greater than right, append it
-        elif left[lindex] > right[rindex]:
-            merged.append(left[lindex])
-        else:
-            merged.append(right[rindex])
-
-    print(merged)
-    return merged 
-
-if __name__ == "__main__":
-
-    merge_sort([8, 1, 9, 14, 23])
-
+mouse = [3, 6, 7, 4, 5, 3, 2, 1]
+A = [5,9,1,2,4,8,6,3,7]
+print(mouse)
+merge_sort(mouse)
+print(mouse)
