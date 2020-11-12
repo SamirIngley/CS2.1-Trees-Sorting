@@ -1,37 +1,50 @@
 #!python
 
 
-def merge(left, right):
+def merge(array, left_index, right_index, middle):
     """Merge given lists of items, each assumed to already be in sorted order,
     and return a new list containing all items in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until one list is empty
-    # TODO: Find minimum item in both lists and append it to new list
-    # TODO: Append remaining items in non-empty list to new list
+    Running time: ??? Why and under what conditions?
+    Memory usage: ??? Why and under what conditions?"""
+    # Make copies of both arrays we're trying to merge
+    # The second parameter is non-inclusive, so we have to increase by 1
+    left_copy = array[left_index:middle + 1]
+    right_copy = array[middle+1:right_index+1]
 
-    merged = []
-    lindex = 0
-    rindex = 0
+    # Initial values for variables that we use to keep
+    # track of where we are in each array
+    left_copy_index = 0
+    right_copy_index = 0
+    sorted_index = left_index
 
-    length = len(right) + len(left)
-    print(right, left)
-    print('Length ', length-1)
+    # Go through both copies until we run out of elements in one
+    while left_copy_index < len(left_copy) and right_copy_index < len(right_copy):
 
-    # loop through the longer string
-    for item in range(length-1):
-        print('index: ', item)
-        print('lindex: ', left[lindex], ', rindex: ', right[rindex])
-        # if the left index is greater than right, append it
-        if left[lindex] >= right[rindex]:
-            merged.append(left[lindex])
-            lindex += 1
+        # If our left_copy has the smaller element, put it in the sorted
+        # part and then move forward in left_copy (by increasing the pointer)
+        if left_copy[left_copy_index] <= right_copy[right_copy_index]:
+            array[sorted_index] = left_copy[left_copy_index]
+            left_copy_index = left_copy_index + 1
+        # Opposite from above
         else:
-            merged.append(right[rindex])
-            rindex += 1
+            array[sorted_index] = right_copy[right_copy_index]
+            right_copy_index = right_copy_index + 1
 
-    print('MERGED', merged)
-    return merged 
+        # Regardless of where we got our element from
+        # move forward in the sorted part
+        sorted_index = sorted_index + 1
+
+    # We ran out of elements either in left_copy or right_copy
+    # so we will go through the remaining elements and add them
+    while left_copy_index < len(left_copy):
+        array[sorted_index] = left_copy[left_copy_index]
+        left_copy_index = left_copy_index + 1
+        sorted_index = sorted_index + 1
+
+    while right_copy_index < len(right_copy):
+        array[sorted_index] = right_copy[right_copy_index]
+        right_copy_index = right_copy_index + 1
+        sorted_index = sorted_index + 1
 
 def split_sort_merge(items):
     """Sort given items by splitting list into two approximately equal halves,
@@ -44,63 +57,54 @@ def split_sort_merge(items):
     # TODO: Merge sorted halves into one list in sorted order
     pass
 
-def merge_sort(items):
+def merge_sort(array, left_index, right_index):
     """Sort given items by splitting list into two approximately equal halves,
     sorting each recursively, and merging results into a list in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if list is so small it's already sorted (base case)
-    # TODO: Split items list into approximately equal halves
-    # TODO: Sort each half by recursively calling merge sort
-    # TODO: Merge sorted halves into one list in sorted order
+    Running time:  O(n log n) - merge doubles list size, n work for each step
+    Memory usage: n length of array"""
+    if left_index >= right_index:
+        return
 
-    if len(items) == 1: # a list of 1 is already sorted
-        print('array', items)
-        return items 
-    
-    # recursive case
-    middle = (len(items)) // 2
-    print('middle ', middle)
+    middle = (left_index + right_index)//2
+    merge_sort(array, left_index, middle)
+    merge_sort(array, middle + 1, right_index)
+    merge(array, left_index, right_index, middle)
 
-    # give me left chunk and right chunk
-    left = items[0:middle]
-    right = items[middle:]
-    print(left)
-    print(right)
-    input()
+def partition(a, low, high):
+    i = low -1
+    pivot = a[high]
+    for j in range(low, high):
+        if a[j] <= pivot:
+            # swap
+            i += 1
+            a[i], a[j] = a[j], a[i]
+    a[i+1], a[high] = a[high], a[i+1] 
+    return i+1 
 
-    result_left = merge_sort(left)
-    result_right = merge_sort(right)
-
-    return merge(result_left, result_right)
-
-def partition(items, low, high):
-    """Return index `p` after in-place partitioning given items in range
-    `[low...high]` by choosing a pivot (TODO: document your method here) from
-    that range, moving pivot into index `p`, items less than pivot into range
-    `[low...p-1]`, and items greater than pivot into range `[p+1...high]`.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Choose a pivot any way and document your method in docstring above
-    # TODO: Loop through all items in range [low...high]
-    # TODO: Move items less than pivot into front of range [low...p-1]
-    # TODO: Move items greater than pivot into back of range [p+1...high]
-    # TODO: Move pivot item into final position [p] and return index p
+def quick_sort(a, low=0, high=None):
+    ''' 
+    Time Complexity: O(n log n) or O(n*n) worst case
+    Memory: none, this is inplace
+    ''' 
+    if high == None:
+        high = len(a) -1 
+    if low < high:
+        p_index = partition(a, low, high) # partition around pivot
+        quick_sort(a, low, p_index-1) # sort lower half
+        quick_sort(a, p_index+1, high) # sort upper half
 
 
-def quick_sort(items, low=None, high=None):
-    """Sort given items in place by partitioning items in range `[low...high]`
-    around a pivot item and recursively sorting each remaining sublist range.
-    TODO: Best case running time: ??? Why and under what conditions?
-    TODO: Worst case running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if high and low range bounds have default values (not given)
-    # TODO: Check if list or range is so small it's already sorted (base case)
-    # TODO: Partition items in-place around a pivot and get index of pivot
-    # TODO: Sort each sublist range by recursively calling quick sort
 
 if __name__ == "__main__":
     
+    print("merge: ")
     mouse = [3, 6, 7, 4, 5, 3, 2, 1]
+    print(mouse)
+    merge_sort(mouse, 0, len(mouse)-1)
+    print(mouse)
 
-    merge_sort(mouse)
+    print("quick:")
+    ray = [5, 9, 1, 2, 4, 8, 6, 3, 7]
+    print(ray)
+    quick_sort(ray)
+    print(ray)
