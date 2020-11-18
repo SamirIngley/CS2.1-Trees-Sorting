@@ -32,6 +32,7 @@ def counting_sort(numbers):
     #   numbers[index] = 
 
     #TODO: Write some test cases
+    return numbers
 
 
 def bucket_sort(numbers, num_buckets=10):
@@ -60,5 +61,8 @@ def bucket_sort(numbers, num_buckets=10):
     # TODO: Loop over buckets and append each bucket's numbers into output list
     # FIXME: Improve this to mutate input instead of creating new output list
 
-    Value * Number_of_Elements / (Maximum_Array_Value + 1) = bucket
+    # Value * Number_of_Elements / (Maximum_Array_Value + 1) = bucket
 
+if __name__ == "__main__":
+  numbs = [0, 5, 2, 9, 3, 1, 5, 6, 3]
+  counting_sort(numbs)
