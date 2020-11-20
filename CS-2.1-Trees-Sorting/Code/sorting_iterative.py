@@ -84,7 +84,7 @@ def insertion_sort(items):
         
         items[currPos] = currVal
 
-    print(items)
+    # print(items)
     return items
 
 
