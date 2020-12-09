@@ -37,7 +37,7 @@ class PrefixTree:
         """Return True if this prefix tree is empty (contains no strings)."""
         return self.size == 0
 
-    def contains(self, string, index=0):
+    def contains(self, string):
         """Return True if this prefix tree contains the given string."""
         node = self.root
         for char in string:
@@ -75,9 +75,12 @@ class PrefixTree:
         # Start with the root node
         node = self.root
         index = 0
+        # start with root node, while looping through char in string, as long as char exists in current node's children,
+        # set the current node to that child and go to the next index 
         while index < len(string) and node.has_child(string[index]) is True:
             node = node.get_child(string[index])
             index += 1
+        # return the last node and its index
         return node, index
 
     def complete(self, prefix):
@@ -85,32 +88,31 @@ class PrefixTree:
         with the given prefix string."""
         # Create a list of completions in prefix tree
         completions = []
-        node = self.root
         if prefix == '':
             # if empty
             return self.strings()
         
-        node = self._find_node(prefix)
+        node, _ = self._find_node(prefix)
 
-        if node[0].character != '':
-            self._traverse(node[0], prefix, completions.append)
+        if node.character != '':
+            self._traverse(node, prefix, completions.append)
         
         return completions
-
 
     def strings(self):
         """Return a list of all strings stored in this prefix tree."""
         # Create a list of all strings in prefix tree
         all_strings = []
+        self._traverse(self.root, '', all_strings.append)
+        return all_strings
         
-        
-
     def _traverse(self, node, prefix, visit):
         """Traverse this prefix tree with recursive depth-first traversal.
         Start at the given node with the given prefix representing its path in
         this prefix tree and visit each node with the given visit function."""
         if node.is_terminal():
             visit(prefix)
+        # get each child from the node, traverse each 
         for char in node.children.keys():
             child = node.get_child(char)
             self._traverse(child, prefix+char, visit)
